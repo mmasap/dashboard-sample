@@ -1,5 +1,6 @@
 import ReactDOM from 'react-dom/client'
 import { RouterProvider } from 'react-router-dom'
+import AuthContext from './contexts/AuthContext'
 import router from './routes'
 
 const prepare = async () => {
@@ -12,6 +13,8 @@ const prepare = async () => {
 
 prepare().then(() => {
   ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
-    <RouterProvider router={router} />
+    <AuthContext>
+      <RouterProvider router={router} />
+    </AuthContext>
   )
 })

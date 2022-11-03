@@ -4,7 +4,7 @@ import SignIn from './SignIn'
 
 const router = createBrowserRouter([
   {
-    path: '/dashboard',
+    path: '/',
     element: <Dashboard />,
   },
   {

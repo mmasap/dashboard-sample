@@ -12,6 +12,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
 import Typography from '@mui/material/Typography'
 import Container from '@mui/material/Container'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
+import { useAuth } from '~/contexts/AuthContext'
 
 function Copyright(props: any) {
   return (
@@ -34,13 +35,16 @@ function Copyright(props: any) {
 const theme = createTheme()
 
 export default function SignIn() {
+  const { login } = useAuth()
+
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     const data = new FormData(event.currentTarget)
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    })
+    const email = data.get('email') as string
+    const password = data.get('password') as string
+    if (email && password) {
+      login(email, password)
+    }
   }
 
   return (
