@@ -1,5 +1,4 @@
 import * as React from 'react'
-import Link from '@mui/material/Link'
 import Table from '@mui/material/Table'
 import TableBody from '@mui/material/TableBody'
 import TableCell from '@mui/material/TableCell'
@@ -62,22 +61,19 @@ const rows = [
   ),
 ]
 
-function preventDefault(event: React.MouseEvent) {
-  event.preventDefault()
-}
-
-export default function Orders() {
+export default function Users() {
+  // TODO フィルタ/編集削除/追加
   return (
     <React.Fragment>
-      <Title>Recent Orders</Title>
+      <Title>ユーザー一覧</Title>
       <Table size="small">
         <TableHead>
           <TableRow>
-            <TableCell>Date</TableCell>
-            <TableCell>Name</TableCell>
-            <TableCell>Ship To</TableCell>
-            <TableCell>Payment Method</TableCell>
-            <TableCell align="right">Sale Amount</TableCell>
+            <TableCell>社員コード</TableCell>
+            <TableCell>社員名</TableCell>
+            <TableCell>部署</TableCell>
+            <TableCell>アカウント</TableCell>
+            <TableCell align="right">テスト</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -92,9 +88,6 @@ export default function Orders() {
           ))}
         </TableBody>
       </Table>
-      <Link color="primary" href="#" onClick={preventDefault} sx={{ mt: 3 }}>
-        See more orders
-      </Link>
     </React.Fragment>
   )
 }
