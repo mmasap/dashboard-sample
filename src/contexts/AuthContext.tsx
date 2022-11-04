@@ -19,7 +19,6 @@ export function useAuth() {
 export default function AuthProvider(props: { children: React.ReactNode }) {
   const [loading, setLoading] = useState(false)
   const [auth, setAuth] = useState<Auth | undefined>()
-  console.log(auth)
 
   async function login(email: string, password: string) {
     setLoading(true)

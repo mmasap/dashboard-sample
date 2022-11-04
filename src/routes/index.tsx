@@ -1,13 +1,17 @@
 import { createBrowserRouter } from 'react-router-dom'
-import Dashboard from './Dashborad'
-import AuthRoot from './AuthRoot'
-import SignIn from './SignIn'
+import DashboardCommon from './dashboard/common'
+import DashboardTop from './dashboard/top'
+import DashboardUser from './dashboard/user'
+import SignIn from './signin'
 
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <AuthRoot />,
-    children: [{ index: true, element: <Dashboard /> }],
+    element: <DashboardCommon />,
+    children: [
+      { index: true, element: <DashboardTop /> },
+      { path: '/user', element: <DashboardUser /> },
+    ],
   },
   {
     path: '/signin',
