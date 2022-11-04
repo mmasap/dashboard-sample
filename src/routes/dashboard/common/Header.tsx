@@ -1,17 +1,28 @@
+import { useState, MouseEvent } from 'react'
+import { useAuth } from '~/contexts/AuthContext'
 import { styled } from '@mui/material/styles'
-import MuiAppBar from '@mui/material/AppBar'
-import Toolbar from '@mui/material/Toolbar'
-import Typography from '@mui/material/Typography'
-import IconButton from '@mui/material/IconButton'
-import Badge from '@mui/material/Badge'
+import {
+  AppBar as MuiAppBar,
+  Toolbar,
+  Typography,
+  IconButton,
+  Badge,
+  Menu,
+  MenuItem,
+} from '@mui/material'
 import MenuIcon from '@mui/icons-material/Menu'
 import NotificationsIcon from '@mui/icons-material/Notifications'
 import SettingsIcon from '@mui/icons-material/Settings'
 import AccountCircleIcon from '@mui/icons-material/AccountCircle'
 import { DashboardCommonProps } from './types'
 
+type AccountMenuProps = {
+  anchorEl?: HTMLElement
+  close: () => void
+}
+
 const AppBar = styled(MuiAppBar, {
-  shouldForwardProp: (prop) => prop !== 'open',
+  shouldForwardProp: (prop) => prop !== 'open' && prop !== 'drawerWidth',
 })<Partial<DashboardCommonProps>>(({ theme, open, drawerWidth }) => ({
   zIndex: theme.zIndex.drawer + 1,
   transition: theme.transitions.create(['width', 'margin'], {
@@ -28,7 +39,26 @@ const AppBar = styled(MuiAppBar, {
   }),
 }))
 
+const HeaderMenu = ({ anchorEl, close }: AccountMenuProps) => {
+  const { logout } = useAuth()
+  return (
+    <Menu anchorEl={anchorEl} open={!!anchorEl} onClose={close}>
+      <MenuItem onClick={logout}>ログアウト</MenuItem>
+    </Menu>
+  )
+}
+
 const Header = ({ open, toggleDrawer, drawerWidth }: DashboardCommonProps) => {
+  const [anchorEl, setAnchorEl] = useState<HTMLElement>()
+
+  const handleClickMenu = (event: MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget)
+  }
+
+  const handleClose = () => {
+    setAnchorEl(undefined)
+  }
+
   return (
     <AppBar position="absolute" open={open} drawerWidth={drawerWidth}>
       <Toolbar
@@ -65,10 +95,11 @@ const Header = ({ open, toggleDrawer, drawerWidth }: DashboardCommonProps) => {
         <IconButton color="inherit">
           <SettingsIcon />
         </IconButton>
-        <IconButton color="inherit">
+        <IconButton color="inherit" onClick={handleClickMenu}>
           <AccountCircleIcon />
         </IconButton>
       </Toolbar>
+      <HeaderMenu anchorEl={anchorEl} close={handleClose} />
     </AppBar>
   )
 }

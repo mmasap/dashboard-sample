@@ -8,6 +8,7 @@ type AuthContextType = {
   loading: boolean
   auth: Auth | undefined
   login: (email: string, password: string) => void
+  logout: () => void
 }
 
 const AuthContext = createContext<AuthContextType>({} as AuthContextType)
@@ -38,9 +39,14 @@ export default function AuthProvider(props: { children: React.ReactNode }) {
     }
   }
 
+  async function logout() {
+    setAuth(undefined)
+  }
+
   const value = {
     auth,
     login,
+    logout,
     loading,
   }
   return (

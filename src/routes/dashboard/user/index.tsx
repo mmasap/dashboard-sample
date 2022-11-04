@@ -1,17 +1,19 @@
 import { useEffect, useState, ChangeEvent, MouseEvent } from 'react'
-import Table from '@mui/material/Table'
-import TableContainer from '@mui/material/TableContainer'
-import TableBody from '@mui/material/TableBody'
-import TableCell from '@mui/material/TableCell'
-import TableHead from '@mui/material/TableHead'
-import TableRow from '@mui/material/TableRow'
-import TablePagination from '@mui/material/TablePagination'
+import {
+  Menu,
+  MenuItem,
+  IconButton,
+  Paper,
+  Table,
+  TableRow,
+  TableContainer,
+  TableBody,
+  TableCell,
+  TableHead,
+  TablePagination,
+} from '@mui/material'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
 import Title from './Title'
-import Paper from '@mui/material/Paper'
-import IconButton from '@mui/material/IconButton'
-import MenuItem from '@mui/material/MenuItem'
-import Menu from '@mui/material/Menu'
 
 type User = {
   id: string

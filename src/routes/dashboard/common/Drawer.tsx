@@ -1,17 +1,21 @@
-import { styled } from '@mui/material/styles'
-import MuiDrawer from '@mui/material/Drawer'
-import Toolbar from '@mui/material/Toolbar'
-import List from '@mui/material/List'
-import Divider from '@mui/material/Divider'
-import IconButton from '@mui/material/IconButton'
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
-import { DashboardCommonProps } from './types'
 import { Link } from 'react-router-dom'
-import ListItemButton from '@mui/material/ListItemButton'
-import ListItemIcon from '@mui/material/ListItemIcon'
-import ListItemText from '@mui/material/ListItemText'
-import DashboardIcon from '@mui/icons-material/Dashboard'
-import PeopleIcon from '@mui/icons-material/People'
+import { styled } from '@mui/material/styles'
+import {
+  Toolbar,
+  Drawer as MuiDrawer,
+  List,
+  Divider,
+  IconButton,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
+} from '@mui/material'
+import {
+  ChevronLeft as ChevronLeftIcon,
+  Dashboard as DashboardIcon,
+  People as PeopleIcon,
+} from '@mui/icons-material'
+import { DashboardCommonProps } from './types'
 
 const StyledDrawer = styled(MuiDrawer, {
   shouldForwardProp: (prop) => prop !== 'open' && prop !== 'drawerWidth',
