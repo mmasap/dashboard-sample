@@ -2,7 +2,7 @@ import { createBrowserRouter } from 'react-router-dom'
 import DashboardCommon from './dashboard/common'
 import DashboardTop from './dashboard/top'
 import DashboardUser from './dashboard/user'
-import SignIn from './signout'
+import SignIn from './signin'
 
 const router = createBrowserRouter([
   {
