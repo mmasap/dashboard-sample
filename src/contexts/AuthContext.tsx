@@ -17,13 +17,26 @@ export function useAuth() {
 }
 
 export default function AuthProvider(props: { children: React.ReactNode }) {
+  const [loading, setLoading] = useState(false)
   const [auth, setAuth] = useState<Auth | undefined>()
-  const [loading, setLoading] = useState(true)
+  console.log(auth)
 
-  function login(email: string, password: string) {
+  async function login(email: string, password: string) {
     setLoading(true)
-    setAuth({ username: 'test' })
-    setLoading(false)
+    try {
+      const response = await fetch('/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password }),
+      })
+      const jsonResponse = await response.json()
+      sessionStorage.setItem('auth', JSON.stringify(jsonResponse))
+      setAuth(jsonResponse)
+    } finally {
+      setLoading(false)
+    }
   }
 
   const value = {
