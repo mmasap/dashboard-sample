@@ -12,7 +12,6 @@ import IconButton from '@mui/material/IconButton'
 import Badge from '@mui/material/Badge'
 import Container from '@mui/material/Container'
 import Grid from '@mui/material/Grid'
-import Paper from '@mui/material/Paper'
 import Link from '@mui/material/Link'
 import MenuIcon from '@mui/icons-material/Menu'
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
@@ -20,7 +19,7 @@ import NotificationsIcon from '@mui/icons-material/Notifications'
 import SettingsIcon from '@mui/icons-material/Settings'
 import AccountCircleIcon from '@mui/icons-material/AccountCircle'
 import { mainListItems, secondaryListItems } from './listItems'
-import Orders from './Users'
+import UserTable from './UserTable'
 
 function Copyright(props: any) {
   return (
@@ -179,9 +178,7 @@ function DashboardContent() {
             <Grid container spacing={3}>
               {/* Recent Orders */}
               <Grid item xs={12}>
-                <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
-                  <Orders />
-                </Paper>
+                <UserTable />
               </Grid>
             </Grid>
             <Copyright sx={{ pt: 4 }} />
