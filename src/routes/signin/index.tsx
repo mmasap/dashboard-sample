@@ -36,7 +36,7 @@ function Copyright(props: any) {
 const theme = createTheme()
 
 export default function SignIn() {
-  const { login, auth } = useAuth()
+  const { login, auth, loading } = useAuth()
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -106,6 +106,7 @@ export default function SignIn() {
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
+              disabled={loading}
             >
               Sign In
             </Button>
