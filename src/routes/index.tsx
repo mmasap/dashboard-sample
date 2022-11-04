@@ -1,13 +1,35 @@
-import { createBrowserRouter } from 'react-router-dom'
+import {
+  createBrowserRouter,
+  useRouteError,
+  isRouteErrorResponse,
+  Navigate,
+} from 'react-router-dom'
 import DashboardCommon from './dashboard/common'
 import DashboardTop from './dashboard/top'
 import DashboardUser from './dashboard/user'
 import SignIn from './signin'
 
+function RootBoundary() {
+  const error = useRouteError()
+
+  if (isRouteErrorResponse(error)) {
+    if (error.status === 404) {
+      return <Navigate to="/" />
+    }
+
+    if (error.status === 401) {
+      return <Navigate to="/signin" />
+    }
+  }
+
+  return <div>Something went wrong</div>
+}
+
 const router = createBrowserRouter([
   {
     path: '/',
     element: <DashboardCommon />,
+    errorElement: <RootBoundary />,
     children: [
       { index: true, element: <DashboardTop /> },
       { path: '/user', element: <DashboardUser /> },
