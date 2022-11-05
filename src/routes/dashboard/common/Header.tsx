@@ -40,10 +40,10 @@ const AppBar = styled(MuiAppBar, {
 }))
 
 const HeaderMenu = ({ anchorEl, close }: AccountMenuProps) => {
-  const { logout } = useAuth()
+  const { signout } = useAuth()
   return (
     <Menu anchorEl={anchorEl} open={!!anchorEl} onClose={close}>
-      <MenuItem onClick={logout}>ログアウト</MenuItem>
+      <MenuItem onClick={signout}>サインアウト</MenuItem>
     </Menu>
   )
 }

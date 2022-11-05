@@ -6,9 +6,10 @@ type Auth = {
 
 type AuthContextType = {
   loading: boolean
+  error: string
   auth: Auth | undefined
-  login: (email: string, password: string) => void
-  logout: () => void
+  signin: (email: string, password: string) => void
+  signout: () => void
 }
 
 const AuthContext = createContext<AuthContextType>({} as AuthContextType)
@@ -20,33 +21,39 @@ export function useAuth() {
 export default function AuthProvider(props: { children: React.ReactNode }) {
   const [loading, setLoading] = useState(false)
   const [auth, setAuth] = useState<Auth | undefined>()
+  const [error, setError] = useState('')
 
-  async function login(email: string, password: string) {
+  async function signin(email: string, password: string) {
     setLoading(true)
+    setError('')
     try {
-      const response = await fetch('/login', {
+      const response = await fetch('/signin', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({ email, password }),
       })
+      if (!response.ok) throw new Error()
       const jsonResponse = await response.json()
       sessionStorage.setItem('auth', JSON.stringify(jsonResponse))
       setAuth(jsonResponse)
+    } catch (e) {
+      setError('ログインに失敗しました')
     } finally {
       setLoading(false)
     }
   }
 
-  async function logout() {
+  async function signout() {
     setAuth(undefined)
   }
 
   const value = {
     auth,
-    login,
-    logout,
+    error,
+    signin,
+    signout,
     loading,
   }
   return (

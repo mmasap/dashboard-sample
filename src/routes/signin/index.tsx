@@ -15,12 +15,13 @@ import {
   Box,
   Typography,
   Container,
+  Alert,
 } from '@mui/material'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
 import { useAuth } from '~/contexts/AuthContext'
 
-type LoginForm = {
+type SigninForm = {
   email: string
   password: string
 }
@@ -39,7 +40,7 @@ const schema = joi
   .messages({ 'string.empty': '入力してください' })
 
 export default function SignIn() {
-  const { login, auth, loading } = useAuth()
+  const { signin, auth, loading, error: authError } = useAuth()
   const navigate = useNavigate()
   const {
     control,
@@ -56,8 +57,8 @@ export default function SignIn() {
     }
   }, [auth])
 
-  const onSubmit = async (data: LoginForm) => {
-    await login(data.email, data.password)
+  const onSubmit = async (data: SigninForm) => {
+    await signin(data.email, data.password)
   }
 
   return (
@@ -84,6 +85,7 @@ export default function SignIn() {
             noValidate
             sx={{ mt: 1 }}
           >
+            {authError && <Alert severity="error">{authError}</Alert>}
             <Controller
               name="email"
               control={control}
