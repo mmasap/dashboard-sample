@@ -1,43 +1,54 @@
-import { FormEvent, useEffect } from 'react'
-import Avatar from '@mui/material/Avatar'
-import Button from '@mui/material/Button'
-import CssBaseline from '@mui/material/CssBaseline'
-import TextField from '@mui/material/TextField'
-import FormControlLabel from '@mui/material/FormControlLabel'
-import Checkbox from '@mui/material/Checkbox'
-import Link from '@mui/material/Link'
-import Grid from '@mui/material/Grid'
-import Box from '@mui/material/Box'
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
-import Typography from '@mui/material/Typography'
-import Container from '@mui/material/Container'
-import { createTheme, ThemeProvider } from '@mui/material/styles'
-import { useAuth } from '~/contexts/AuthContext'
+import { useEffect } from 'react'
+import { useForm, Controller } from 'react-hook-form'
+import { joiResolver } from '@hookform/resolvers/joi'
 import { useNavigate } from 'react-router-dom'
+import joi from 'joi'
+import {
+  Avatar,
+  Button,
+  CssBaseline,
+  TextField,
+  FormControlLabel,
+  Checkbox,
+  Link,
+  Grid,
+  Box,
+  Typography,
+  Container,
+} from '@mui/material'
+import { createTheme, ThemeProvider } from '@mui/material/styles'
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
+import { useAuth } from '~/contexts/AuthContext'
 
-function Copyright(props: any) {
-  return (
-    <Typography
-      variant="body2"
-      color="text.secondary"
-      align="center"
-      {...props}
-    >
-      {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  )
+type LoginForm = {
+  email: string
+  password: string
 }
 
 const theme = createTheme()
 
+const schema = joi
+  .object({
+    email: joi
+      .string()
+      .email({ minDomainSegments: 2, tlds: { allow: false } })
+      .message('入力されたメールアドレスが不正です'),
+    password: joi.string(),
+  })
+  .required()
+  .messages({ 'string.empty': '入力してください' })
+
 export default function SignIn() {
   const { login, auth, loading } = useAuth()
   const navigate = useNavigate()
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    defaultValues: { email: '', password: '' },
+    resolver: joiResolver(schema),
+  })
 
   useEffect(() => {
     if (auth) {
@@ -45,12 +56,8 @@ export default function SignIn() {
     }
   }, [auth])
 
-  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault()
-    const data = new FormData(event.currentTarget)
-    const email = data.get('email') as string
-    const password = data.get('password') as string
-    await login(email, password)
+  const onSubmit = async (data: LoginForm) => {
+    await login(data.email, data.password)
   }
 
   return (
@@ -73,29 +80,47 @@ export default function SignIn() {
           </Typography>
           <Box
             component="form"
-            onSubmit={handleSubmit}
+            onSubmit={handleSubmit(onSubmit)}
             noValidate
             sx={{ mt: 1 }}
           >
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="email"
-              label="Email Address"
+            <Controller
               name="email"
-              autoComplete="email"
-              autoFocus
+              control={control}
+              render={({ field }) => (
+                <TextField
+                  {...field}
+                  error={!!errors.email}
+                  helperText={errors.email?.message}
+                  margin="normal"
+                  required
+                  fullWidth
+                  id="email"
+                  label="Email Address"
+                  name="email"
+                  autoComplete="email"
+                  autoFocus
+                />
+              )}
             />
-            <TextField
-              margin="normal"
-              required
-              fullWidth
+            <Controller
               name="password"
-              label="Password"
-              type="password"
-              id="password"
-              autoComplete="current-password"
+              control={control}
+              render={({ field }) => (
+                <TextField
+                  {...field}
+                  error={!!errors.password}
+                  helperText={errors.password?.message}
+                  margin="normal"
+                  required
+                  fullWidth
+                  name="password"
+                  label="Password"
+                  type="password"
+                  id="password"
+                  autoComplete="current-password"
+                />
+              )}
             />
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
@@ -124,7 +149,6 @@ export default function SignIn() {
             </Grid>
           </Box>
         </Box>
-        <Copyright sx={{ mt: 8, mb: 4 }} />
       </Container>
     </ThemeProvider>
   )

@@ -13,10 +13,13 @@
   "dependencies": {
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
+    "@hookform/resolvers": "^2.9.10",
     "@mui/icons-material": "^5.10.9",
     "@mui/material": "^5.10.12",
+    "joi": "^17.7.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-hook-form": "^7.39.1",
     "react-router-dom": "^6.4.3"
   },
   "devDependencies": {
@@ -34,6 +37,7 @@
     "husky": "^8.0.0",
     "lint-staged": "^13.0.3",
     "msw": "^0.47.4",
+    "prettier": "^2.7.1",
     "typescript": "^4.6.4",
     "vite": "^3.2.0"
   },
