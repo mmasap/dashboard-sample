@@ -98,7 +98,7 @@ export default function SignIn() {
                   required
                   fullWidth
                   id="email"
-                  label="Email Address"
+                  label="メールアドレス"
                   name="email"
                   autoComplete="email"
                   autoFocus
@@ -117,7 +117,7 @@ export default function SignIn() {
                   required
                   fullWidth
                   name="password"
-                  label="Password"
+                  label="パスワード"
                   type="password"
                   id="password"
                   autoComplete="current-password"
