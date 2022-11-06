@@ -23,6 +23,8 @@ type User = {
   email: string
 }
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL
+
 export default function UserTable() {
   const [userList, setUserList] = useState<User[]>([])
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
@@ -30,7 +32,7 @@ export default function UserTable() {
   const [rowsPerPage, setRowsPerPage] = useState(10)
 
   useEffect(() => {
-    fetch('/users')
+    fetch(`${API_BASE_URL}/users`)
       .then((res) => res.json())
       .then((user) => {
         setUserList(user)
