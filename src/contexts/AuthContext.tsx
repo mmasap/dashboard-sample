@@ -12,7 +12,7 @@ type AuthContextType = {
   signout: () => void
 }
 
-const BASE_URL = import.meta.env.VITE_BASE_URL
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL
 
 const AuthContext = createContext<AuthContextType>({} as AuthContextType)
 
@@ -29,7 +29,7 @@ export default function AuthProvider(props: { children: React.ReactNode }) {
     setLoading(true)
     setError('')
     try {
-      const response = await fetch(`${BASE_URL}/signin`, {
+      const response = await fetch(`${API_BASE_URL}/signin`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
