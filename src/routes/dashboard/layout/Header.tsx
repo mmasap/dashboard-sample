@@ -14,7 +14,7 @@ import MenuIcon from '@mui/icons-material/Menu'
 import NotificationsIcon from '@mui/icons-material/Notifications'
 import SettingsIcon from '@mui/icons-material/Settings'
 import AccountCircleIcon from '@mui/icons-material/AccountCircle'
-import { DashboardCommonProps } from './types'
+import { DashboardLayoutProps } from './types'
 
 type AccountMenuProps = {
   anchorEl?: HTMLElement
@@ -23,7 +23,7 @@ type AccountMenuProps = {
 
 const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== 'open' && prop !== 'drawerWidth',
-})<Partial<DashboardCommonProps>>(({ theme, open, drawerWidth }) => ({
+})<Partial<DashboardLayoutProps>>(({ theme, open, drawerWidth }) => ({
   zIndex: theme.zIndex.drawer + 1,
   transition: theme.transitions.create(['width', 'margin'], {
     easing: theme.transitions.easing.sharp,
@@ -48,7 +48,7 @@ const HeaderMenu = ({ anchorEl, close }: AccountMenuProps) => {
   )
 }
 
-const Header = ({ open, toggleDrawer, drawerWidth }: DashboardCommonProps) => {
+const Header = ({ open, toggleDrawer, drawerWidth }: DashboardLayoutProps) => {
   const [anchorEl, setAnchorEl] = useState<HTMLElement>()
 
   const handleClickMenu = (event: MouseEvent<HTMLElement>) => {

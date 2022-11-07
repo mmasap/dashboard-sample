@@ -15,11 +15,11 @@ import {
   Dashboard as DashboardIcon,
   People as PeopleIcon,
 } from '@mui/icons-material'
-import { DashboardCommonProps } from './types'
+import { DashboardLayoutProps } from './types'
 
 const StyledDrawer = styled(MuiDrawer, {
   shouldForwardProp: (prop) => prop !== 'open' && prop !== 'drawerWidth',
-})<Partial<DashboardCommonProps>>(({ theme, open, drawerWidth }) => ({
+})<Partial<DashboardLayoutProps>>(({ theme, open, drawerWidth }) => ({
   '& .MuiDrawer-paper': {
     position: 'relative',
     whiteSpace: 'nowrap',
@@ -48,7 +48,7 @@ const listItems = [
   { text: 'ユーザー', to: '/user', icon: <PeopleIcon /> },
 ]
 
-const Drawer = ({ open, toggleDrawer, drawerWidth }: DashboardCommonProps) => {
+const Drawer = ({ open, toggleDrawer, drawerWidth }: DashboardLayoutProps) => {
   return (
     <StyledDrawer variant="permanent" open={open} drawerWidth={drawerWidth}>
       <Toolbar

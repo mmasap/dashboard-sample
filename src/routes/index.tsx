@@ -4,7 +4,7 @@ import {
   isRouteErrorResponse,
   Navigate,
 } from 'react-router-dom'
-import DashboardCommon from './dashboard/common'
+import DashboardLayout from './dashboard/layout'
 import DashboardTop from './dashboard/top'
 import DashboardUser from './dashboard/user'
 import SignIn from './signin'
@@ -28,7 +28,7 @@ function RootBoundary() {
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <DashboardCommon />,
+    element: <DashboardLayout />,
     errorElement: <RootBoundary />,
     children: [
       { index: true, element: <DashboardTop /> },
