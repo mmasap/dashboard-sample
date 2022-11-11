@@ -19,7 +19,9 @@
   "plugins": ["react", "@typescript-eslint"],
   "rules": {
     "space-before-function-paren": "off",
-    "comma-dangle": "off"
+    "comma-dangle": "off",
+    "no-unused-vars": "off",
+    "@typescript-eslint/no-unused-vars": ["error"]
   },
   "settings": {
     "react": {
