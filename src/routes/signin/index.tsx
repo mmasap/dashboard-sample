@@ -42,7 +42,7 @@ const schema = joi
   .messages({ 'string.empty': '入力してください' })
 
 export default function SignIn() {
-  const { signin, auth, loading, error: authError } = useAuth()
+  const { signin, auth, loading, error: authError, initialized } = useAuth()
   const navigate = useNavigate()
   const {
     control,
@@ -61,6 +61,10 @@ export default function SignIn() {
 
   const onSubmit = async (data: SigninForm) => {
     await signin(data.email, data.password, data.remember)
+  }
+
+  if (!initialized) {
+    return <></>
   }
 
   return (

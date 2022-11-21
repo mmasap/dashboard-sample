@@ -8,6 +8,7 @@ type AuthContextType = {
   loading: boolean
   error: string
   auth: Auth | undefined
+  initialized: boolean
   signin: (email: string, password: string, remember: boolean) => void
   signout: () => void
 }
@@ -22,10 +23,12 @@ export function useAuth() {
 
 export default function AuthProvider(props: { children: React.ReactNode }) {
   const [loading, setLoading] = useState(false)
+  const [initialized, setInitialized] = useState(false)
   const [auth, setAuth] = useState<Auth | undefined>()
   const [error, setError] = useState('')
 
   useEffect(() => {
+    setInitialized(true)
     const storageAuth = localStorage.getItem('auth')
     if (storageAuth) {
       setAuth(JSON.parse(storageAuth))
@@ -67,6 +70,7 @@ export default function AuthProvider(props: { children: React.ReactNode }) {
     signin,
     signout,
     loading,
+    initialized,
   }
   return (
     <AuthContext.Provider value={value}>{props.children}</AuthContext.Provider>
