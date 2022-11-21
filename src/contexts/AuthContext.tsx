@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from 'react'
+import React, { createContext, useContext, useState, useEffect } from 'react'
 
 type Auth = {
   username: string
@@ -8,7 +8,7 @@ type AuthContextType = {
   loading: boolean
   error: string
   auth: Auth | undefined
-  signin: (email: string, password: string) => void
+  signin: (email: string, password: string, remember: boolean) => void
   signout: () => void
 }
 
@@ -25,7 +25,14 @@ export default function AuthProvider(props: { children: React.ReactNode }) {
   const [auth, setAuth] = useState<Auth | undefined>()
   const [error, setError] = useState('')
 
-  async function signin(email: string, password: string) {
+  useEffect(() => {
+    const storageAuth = localStorage.getItem('auth')
+    if (storageAuth) {
+      setAuth(JSON.parse(storageAuth))
+    }
+  }, [])
+
+  async function signin(email: string, password: string, remember: boolean) {
     setLoading(true)
     setError('')
     try {
@@ -38,7 +45,9 @@ export default function AuthProvider(props: { children: React.ReactNode }) {
       })
       if (!response.ok) throw new Error()
       const jsonResponse = await response.json()
-      sessionStorage.setItem('auth', JSON.stringify(jsonResponse))
+      if (remember) {
+        localStorage.setItem('auth', JSON.stringify(jsonResponse))
+      }
       setAuth(jsonResponse)
     } catch (e) {
       setError('ログインに失敗しました')
@@ -48,6 +57,7 @@ export default function AuthProvider(props: { children: React.ReactNode }) {
   }
 
   async function signout() {
+    localStorage.removeItem('auth')
     setAuth(undefined)
   }
 

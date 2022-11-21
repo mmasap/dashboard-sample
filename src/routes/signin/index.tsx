@@ -24,6 +24,7 @@ import { useAuth } from '~/contexts/AuthContext'
 type SigninForm = {
   email: string
   password: string
+  remember: boolean
 }
 
 const theme = createTheme()
@@ -35,6 +36,7 @@ const schema = joi
       .email({ minDomainSegments: 2, tlds: { allow: false } })
       .message('入力されたメールアドレスが不正です'),
     password: joi.string(),
+    remember: joi.boolean(),
   })
   .required()
   .messages({ 'string.empty': '入力してください' })
@@ -47,7 +49,7 @@ export default function SignIn() {
     handleSubmit,
     formState: { errors },
   } = useForm({
-    defaultValues: { email: '', password: '' },
+    defaultValues: { email: '', password: '', remember: false },
     resolver: joiResolver(schema),
   })
 
@@ -58,7 +60,7 @@ export default function SignIn() {
   }, [auth])
 
   const onSubmit = async (data: SigninForm) => {
-    await signin(data.email, data.password)
+    await signin(data.email, data.password, data.remember)
   }
 
   return (
@@ -124,9 +126,15 @@ export default function SignIn() {
                 />
               )}
             />
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
+            <Controller
+              name="remember"
+              control={control}
+              render={({ field }) => (
+                <FormControlLabel
+                  control={<Checkbox {...field} color="primary" />}
+                  label="Remember me"
+                />
+              )}
             />
             <Button
               type="submit"

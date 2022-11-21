@@ -18,7 +18,7 @@ export default function authRoot() {
   }
 
   useEffect(() => {
-    if (!auth?.username) {
+    if (!auth) {
       navigate('/signin')
     }
   }, [auth])
